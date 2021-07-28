@@ -17,7 +17,7 @@
 <meta property="og:type" content="${requestScope.currentPost != null ? 'article':'website'}">
 <meta property="og:title" content="${requestScope.currentPost != null ? requestScope.currentPost.postTitle : 'Life & Coding'}">
 <meta property="og:description" content="${requestScope.currentPost != null ? requestScope.postTumbnail : '일상과 배움을 기록하는 공간, bcw2104의 개인 블로그'}" >
-<meta property="og:image" content="<%=GlobalValues.link%>/resources/images/og_img.png">
+<meta property="og:image" content="<%=GlobalValues.link%>${requestScope.currentPost != null && requestScope.currentPost.thumbnail != null ? '/resources/upload/files/post/'+=requestScope.currentPost.postId+='/thumbnail/'+=requestScope.currentPost.thumbnail : '/resources/images/og_img.png'}">
 <meta property="og:url" content="http://www.lifencoding.com${requestScope['javax.servlet.forward.request_uri']}"/>
 <meta property="og:site_name" content="Life & Coding">
 

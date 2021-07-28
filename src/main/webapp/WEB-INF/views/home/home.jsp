@@ -81,7 +81,7 @@
 	                   		</span>
 						</div>
 					</div>
-					<c:if test="${n.thumbnail != ''}">
+					<c:if test="${n.thumbnail != null}">
 		        	<img class="thumbnail ml-3" src="<%= GlobalValues.link %>/resources/upload/files/post/${n.postId}/thumbnail/${n.thumbnail}">
 		        	</c:if>
 				</div>
@@ -113,7 +113,7 @@
 	                   		</span>
 						</div>
 					</div>
-					<c:if test="${n.thumbnail != ''}">
+					<c:if test="${n.thumbnail != null}">
 		        	<img class="thumbnail ml-3" src="<%= GlobalValues.link %>/resources/upload/files/post/${n.postId}/thumbnail/${n.thumbnail}">
 		        	</c:if>
 				</div>

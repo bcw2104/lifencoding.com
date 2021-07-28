@@ -27,7 +27,7 @@ public class PostVO {
 		categoryName = null;
 		start = 0;
 		end = 0;
-		thumbnail="";
+		thumbnail = null;
 		hits = 0;
 	}
 
