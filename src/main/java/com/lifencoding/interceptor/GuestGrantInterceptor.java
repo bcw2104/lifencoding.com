@@ -13,11 +13,14 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.lifencoding.entity.GuestVO;
 import com.lifencoding.serviceImpl.GuestService;
+import com.lifencoding.util.IpHandler;
 
 public class GuestGrantInterceptor implements HandlerInterceptor{
 
 	@Autowired
 	public GuestService guestService;
+	@Autowired
+	public IpHandler ipHandler;
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -26,6 +29,7 @@ public class GuestGrantInterceptor implements HandlerInterceptor{
 		HttpSession session = request.getSession();
 
 		Cookie guestCookie = null;
+		boolean recordIp = false;
 
 		if(session.getAttribute("guest") == null && session.getAttribute("admin") == null) {
 			ArrayList<Integer> visitList = new ArrayList<Integer>();
@@ -46,38 +50,34 @@ public class GuestGrantInterceptor implements HandlerInterceptor{
 
 		if(guestCookie == null) {
 			guestCookie = new Cookie("visit", String.valueOf(System.currentTimeMillis()));
-			guestCookie.setMaxAge(60*60*24);
-			guestCookie.setPath("/");
-
-			String guestIp = request.getHeader("X-FORWARDED-FOR");
-			if (guestIp == null)
-				guestIp = request.getRemoteAddr();
-
-			GuestVO guestVO = new GuestVO();
-			guestVO.setGuestIp(guestIp);
-			guestService.add(guestVO);
+			recordIp = true;
 		}
 		else{
 			Date cookieDate = new Date(Long.parseLong(guestCookie.getValue()));
 			Date currentDate = new Date();
 
 			if(cookieDate.getDay() != currentDate.getDay()) {
-				String guestIp = request.getHeader("X-FORWARDED-FOR");
-				if (guestIp == null)
-					guestIp = request.getRemoteAddr();
+				recordIp = true;
+			}
 
+			guestCookie.setValue(String.valueOf(System.currentTimeMillis()));
+		}
+
+		if(recordIp) {
+			String guestIp = ipHandler.getIp(request);
+			String countryCode = ipHandler.getCountryCode(guestIp);
+
+			if(countryCode.equals("KR")) {
 				GuestVO guestVO = new GuestVO();
 				guestVO.setGuestIp(guestIp);
 				guestService.add(guestVO);
 			}
-
-			guestCookie.setValue(String.valueOf(System.currentTimeMillis()));
-			guestCookie.setMaxAge(60*60*24);
-			guestCookie.setPath("/");
 		}
 
-		response.addCookie(guestCookie);
+		guestCookie.setMaxAge(60*60*24);
+		guestCookie.setPath("/");
 
+		response.addCookie(guestCookie);
 
 		return true;
 	}
