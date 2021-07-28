@@ -49,10 +49,6 @@
 	<!-- Util beans -->
 	<bean class="com.lifencoding.util.AuthTools" />
 	<bean class="com.lifencoding.util.MailTools" />
-	<bean class="com.lifencoding.util.FTPManager" >
-		<constructor-arg value="${file.host}"></constructor-arg>
-		<constructor-arg value="${file.username}"></constructor-arg>
-		<constructor-arg value="${file.password}"></constructor-arg>
-	</bean>
+	<bean class="com.lifencoding.util.FTPManager" />
 	<bean class="com.lifencoding.util.IpHandler" />
 </beans>

@@ -6,18 +6,15 @@ import java.net.SocketException;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPClientConfig;
+import org.springframework.beans.factory.annotation.Value;
 
 public class FTPManager {
+	@Value("${cdn.host}")
 	private String host;
+	@Value("${cdn.username}")
 	private String username;
+	@Value("${cdn.password}")
 	private String password;
-
-	public FTPManager(String host, String username, String password) {
-		this.host = host;
-		this.username = username;
-		this.password = password;
-	}
-
 
 	public FTPClient connect() {
 		FTPClient client = new FTPClient();
