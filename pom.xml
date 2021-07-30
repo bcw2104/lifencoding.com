@@ -10,7 +10,6 @@
 	<properties>
 		<java-version>1.8</java-version>
 		<org.springframework-version>5.2.8.RELEASE</org.springframework-version>
-		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
 	<dependencies>
@@ -31,13 +30,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
-		</dependency>
-
-		<!-- AspectJ -->
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<version>${org.aspectj-version}</version>
 		</dependency>
 
 		<!-- Logging -->
@@ -123,27 +115,6 @@
 			<version>1.2.5</version>
 		</dependency>
 
-		<!-- validation -->
-		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-			<version>2.0.1.Final</version>
-		</dependency>
-
-		<!-- hibernate validator -->
-		<dependency>
-			<groupId>org.hibernate.validator</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>6.1.5.Final</version>
-		</dependency>
-
-		<!-- ojdbc6 -->
-		<dependency>
-			<groupId>com.oracle.database.jdbc</groupId>
-			<artifactId>ojdbc6</artifactId>
-			<version>11.2.0.4</version>
-		</dependency>
-
 		<!-- json-simple -->
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
@@ -155,7 +126,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>5.2.8.RELEASE</version>
+			<version>${org.springframework-version}</version>
 		</dependency>
 
 		<!-- commons-dbcp2 -->
@@ -163,6 +134,13 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-dbcp2</artifactId>
 			<version>2.7.0</version>
+		</dependency>
+
+		<!-- mysql -->
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>8.0.25</version>
 		</dependency>
 
 		<!-- mybatis -->
@@ -179,39 +157,11 @@
 			<version>2.0.5</version>
 		</dependency>
 
-		<!-- spring-security-core -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core</artifactId>
-			<version>5.2.1.RELEASE</version>
-		</dependency>
-
-		<!-- spring-security-config -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
-			<version>5.2.1.RELEASE</version>
-		</dependency>
-
-		<!-- spring-security-web -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>5.2.1.RELEASE</version>
-		</dependency>
-
-		<!-- spring-security-taglibs -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-taglibs</artifactId>
-			<version>5.2.1.RELEASE</version>
-		</dependency>
-
 		<!-- spring-context-support -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
-			<version>5.2.1.RELEASE</version>
+			<version>${org.springframework-version}</version>
 		</dependency>
 
 		<!-- javax.mail-api -->
@@ -248,7 +198,6 @@
 			<artifactId>commons-net</artifactId>
 			<version>3.6</version>
 		</dependency>
-
 
 		<!-- Test -->
 		<dependency>
