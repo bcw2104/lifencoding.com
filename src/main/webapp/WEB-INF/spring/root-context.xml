@@ -12,6 +12,11 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
+
+	<context:component-scan base-package="com.lifencoding.serviceImpl"/>
+	<context:component-scan base-package="com.lifencoding.mapper"/>
+	<context:component-scan base-package="com.lifencoding.exception" />
+
 	<!-- properties -->
 	<context:property-placeholder
 		location="/WEB-INF/properties/*.properties" />
