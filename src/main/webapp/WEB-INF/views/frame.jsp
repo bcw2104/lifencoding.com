@@ -18,13 +18,13 @@
 <meta property="og:title" content="${requestScope.currentPost != null ? requestScope.currentPost.postTitle : 'Life & Coding'}">
 <meta property="og:description" content="${requestScope.currentPost != null ? requestScope.postTumbnail : '일상과 배움을 기록하는 공간, bcw2104의 개인 블로그'}" >
 <meta property="og:image" content="<%=GlobalValues.link%>${requestScope.currentPost != null && requestScope.currentPost.thumbnail != null ? '/resources/upload/files/post/'+=requestScope.currentPost.postId+='/thumbnail/'+=requestScope.currentPost.thumbnail : '/resources/images/og_img.png'}">
-<meta property="og:url" content="http://www.lifencoding.com${requestScope['javax.servlet.forward.request_uri']}"/>
+<meta property="og:url" content="https://www.lifencoding.com${requestScope['javax.servlet.forward.request_uri']}"/>
 <meta property="og:site_name" content="Life & Coding">
 
 <title>${requestScope.currentPost != null ? requestScope.currentPost.postTitle+=' | Life & Coding' : 'Life & Coding | 일상과 배움을 기록하는 공간'}</title>
 
-<link rel="canonical" href="http://www.lifencoding.com${requestScope['javax.servlet.forward.request_uri']}">
-<link rel="icon" type="image/png" sizes="16x16" href="<%=GlobalValues.link%>/resources/images/favicon.png">
+<link rel="canonical" href="https://www.lifencoding.com${requestScope['javax.servlet.forward.request_uri']}">
+<link rel="icon" type="image/png" sizes="16x16" href="https://www.lifencoding.com/favicon.ico">
 
 <!-- Bootstrap4 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
