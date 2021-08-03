@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <meta http-equiv='content-language' content='ko'>
 
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 <meta name="viewport" content="width=device-width, initial-scale=1" >
 <meta name="naver-site-verification" content="cafe74f69dba36a0a355cc0abb68cbaa91d7cd9b" >
 <meta name="author" content="bcw2104">
@@ -34,6 +35,14 @@
 
 <link rel="stylesheet" href="/resources/css/common-min.css">
 <link rel="stylesheet" href="/resources/css/font-min.css">
+
+<script type="text/javascript">
+    if (window.location.protocol == "http:") {
+        var restOfUrl = window.location.href.substr(5);
+        window.location.replace("https:" + restOfUrl);
+    }
+</script>
+
 </head>
 
 <body style="background-color: rgb(250, 250, 250)" class="body-font">

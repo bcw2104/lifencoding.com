@@ -20,6 +20,7 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="redirectHttp10Compatible" value="false" />
 	</beans:bean>
 
 	<beans:bean id="authCheckInterceptor" class="com.lifencoding.interceptor.AuthCheckInterceptor" />

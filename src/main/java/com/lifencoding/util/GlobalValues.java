@@ -11,8 +11,6 @@ public class GlobalValues {
 	public final static String postView = "/WEB-INF/views/post/view.jsp";
 
 	//ftp
-	public final static String link = "http://bcw2104.cdn3.cafe24.com";
-	public final static String profileImg = "http://bcw2104.cdn3.cafe24.com/resources/user/profile/";
-
-
+	public final static String link = "https://bcw2104.cdn3.cafe24.com";
+	public final static String profileImg = "https://bcw2104.cdn3.cafe24.com/resources/user/profile/";
 }
