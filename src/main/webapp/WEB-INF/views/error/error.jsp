@@ -39,7 +39,7 @@
 				<span class="mr-2 font-18">허용되지 않는 페이지입니다.</span>
 			</c:if>
 			<c:if test="${requestScope['javax.servlet.error.status_code'] == 500}">
-				<span class="mr-2 font-18">접근 권한이 없는 페이지입니다.</span>
+				<span class="mr-2 font-18">서버에 오류가 발생했습니다.</span>
 			</c:if>
 			<a href="/"><button type="button" class="btn btn-default" style="width:80px">홈으로</button></a>
 		</div>
