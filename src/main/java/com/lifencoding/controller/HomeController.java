@@ -161,8 +161,9 @@ public class HomeController {
 			model.addAttribute("currentCategory", categoryVO);
 			model.addAttribute("currentSubCategory", subCategoryVO);
 		} else {
-			response.sendError(404);
+			throw new RuntimeException();
 		}
+
 		return "forward:/";
 	}
 
@@ -208,7 +209,7 @@ public class HomeController {
 			model.addAttribute("currentCategory", categoryVO);
 			model.addAttribute("currentSubCategory", subCategoryVO);
 		} else {
-			response.sendError(404);
+			throw new RuntimeException();
 		}
 		return "forward:/";
 	}

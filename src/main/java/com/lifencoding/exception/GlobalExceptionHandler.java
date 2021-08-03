@@ -9,6 +9,16 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+	@ExceptionHandler(java.lang.RuntimeException.class)
+	public void numberFormatException(RuntimeException e, HttpServletResponse response) {
+		try {
+			response.sendError(404);
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+	}
+
 	@ExceptionHandler(java.lang.NumberFormatException.class)
 	public void numberFormatException(NumberFormatException e, HttpServletResponse response) {
 		try {
