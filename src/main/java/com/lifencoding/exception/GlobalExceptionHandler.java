@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
 	@ExceptionHandler(java.lang.RuntimeException.class)
-	public void numberFormatException(RuntimeException e, HttpServletResponse response) {
+	public void runtimeException(RuntimeException e, HttpServletResponse response) {
 		try {
 			response.sendError(404);
 		} catch (IOException ioe) {
