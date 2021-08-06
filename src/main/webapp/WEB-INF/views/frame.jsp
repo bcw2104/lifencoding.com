@@ -24,14 +24,6 @@
 
 <title>${requestScope.currentPost != null ? requestScope.currentPost.postTitle+=' | Life & Coding' : 'Life & Coding | 일상과 배움을 기록하는 공간'}</title>
 
-
-<script type="text/javascript">
-    if (window.location.protocol == "http:") {
-        var restOfUrl = window.location.href.substr(5);
-        window.location.replace("https:" + restOfUrl);
-    }
-</script>
-
 <link rel="canonical" href="https://www.lifencoding.com${requestScope['javax.servlet.forward.request_uri']}">
 <link rel="shortcut icon" href="https://www.lifencoding.com/favicon.ico">
 
