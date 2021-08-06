@@ -33,7 +33,7 @@
 </script>
 
 <link rel="canonical" href="https://www.lifencoding.com${requestScope['javax.servlet.forward.request_uri']}">
-<link rel="icon" type="image/png" sizes="16x16" href="https://www.lifencoding.com/favicon.ico">
+<link rel="shortcut icon" href="https://www.lifencoding.com/favicon.ico">
 
 <!-- Bootstrap4 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
