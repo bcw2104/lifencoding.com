@@ -4,7 +4,7 @@
 <br/>
 
 ### 🔗 Link
-👉 [Life & Coding](http://www.lifencoding.com)
+👉 [Life & Coding](https://www.lifencoding.com)
 
 <br/>
 
