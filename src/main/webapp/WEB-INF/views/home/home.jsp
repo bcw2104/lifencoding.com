@@ -22,7 +22,7 @@
 		<div class="col-lg-4 mb-3 p-0">
 			<div class="row m-0">
 				<div class="col-sm-4 col-lg-12 ">
-					<img class="profile-img mb-3" src="<%=GlobalValues.profileImg %>${requestScope.adminInfo.adminImg}" alt="profile" />
+					<img alt="profile"  class="profile-img mb-3" src="<%=GlobalValues.profileImg %>${requestScope.adminInfo.adminImg}"/>
 				</div>
 				<div class="col-sm-1"></div>
 				<div class="col-8 col-sm-7 col-lg-12">
@@ -62,7 +62,7 @@
 				<div class="post-item my-4 d-flex pl-2">
 					<div class="p-0 flex-fill d-flex flex-column justify-content-between">
 						<div>
-							<a class="text-dark font-17" href="/${n.categoryEn}/${n.postId}">${n.postTitle}</a>
+							<a class="text-dark font-17" href="/${n.categoryEn}/${n.postId}#post">${n.postTitle}</a>
 							<div class="mt-3 font-13 post-content">${n.postContent}</div>
 						</div>
 						<div class="mt-3 font-12">
@@ -82,19 +82,19 @@
 						</div>
 					</div>
 					<c:if test="${n.thumbnail != null}">
-		        	<img class="thumbnail ml-3" src="<%= GlobalValues.link %>/resources/upload/files/post/${n.postId}/thumbnail/${n.thumbnail}">
+		        	<img alt="thumbnail" class="thumbnail ml-3" src="<%= GlobalValues.link %>/resources/upload/files/post/${n.postId}/thumbnail/${n.thumbnail}">
 		        	</c:if>
 				</div>
 				<hr/>
 				</c:forEach>
 		    </div>
 			<div class="content-recent mt-5">
-				<div class="mb-2 bg-dark text-white p-2 head-font font-20">최신 글</div>
+				<div id="recent" class="mb-2 bg-dark text-white p-2 head-font font-20">최신 글</div>
 				<c:forEach items="${requestScope.postList}" var="n">
 				<div class="post-item my-4 d-flex pl-2">
 					<div class="p-0 flex-fill d-flex flex-column justify-content-between">
 						<div>
-							<a class="text-dark font-17" href="/${n.categoryEn}/${n.postId}">${n.postTitle}</a>
+							<a class="text-dark font-17" href="/${n.categoryEn}/${n.postId}#post">${n.postTitle}</a>
 							<div class="mt-3 font-13 post-content">${n.postContent}</div>
 						</div>
 						<div class="mt-3 font-12">
@@ -114,17 +114,17 @@
 						</div>
 					</div>
 					<c:if test="${n.thumbnail != null}">
-		        	<img class="thumbnail ml-3" src="<%= GlobalValues.link %>/resources/upload/files/post/${n.postId}/thumbnail/${n.thumbnail}">
+		        	<img alt="thumbnail" class="thumbnail ml-3" src="<%= GlobalValues.link %>/resources/upload/files/post/${n.postId}/thumbnail/${n.thumbnail}">
 		        	</c:if>
 				</div>
 				<hr/>
 				</c:forEach>
 				<ul class="pager row list-unstyled justify-content-center mt-3">
-			        <li class="pager-item ${curPage-1 < 1 ? 'd-none' : ''}"><a class="text-dark" href="?p=${curPage-1}">이전</a></li>
+			        <li class="pager-item ${curPage-1 < 1 ? 'd-none' : ''}"><a class="text-dark" href="?p=${curPage-1}#recent">이전</a></li>
 			        <c:forEach begin="1" end="${maxPage}" varStatus="n">
-			        	<li class="pager-item ${curPage == n.index ? 'pager-item-active' : ''}"><a class="text-dark p-2" href="?p=${n.index}">${n.index}</a></li>
+			        	<li class="pager-item ${curPage == n.index ? 'pager-item-active' : ''}"><a class="text-dark p-2" href="?p=${n.index}#recent">${n.index}</a></li>
 			        </c:forEach>
-			        <li class="pager-item ${curPage+1 > maxPage ? 'd-none' : ''}"><a class="text-dark" href="?p=${curPage+1}">다음</a></li>
+			        <li class="pager-item ${curPage+1 > maxPage ? 'd-none' : ''}"><a class="text-dark" href="?p=${curPage+1}#recent">다음</a></li>
 			    </ul>
 		    </div>
 	    </div>

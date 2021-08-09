@@ -58,7 +58,7 @@
 	            	<c:forEach begin="0" end="9" items="${requestScope.postList}" var="n">
 	                <tr>
 	                    <td class="text-left">
-	                    	<a class="text-dark" href="/${n.categoryEn}/${n.postId}?p=${curPage}">${n.postTitle}</a>
+	                    	<a class="text-dark" href="/${n.categoryEn}/${n.postId}?p=${curPage}#post">${n.postTitle}</a>
 	                    </td>
 	                    <td class="text-right">
 	                    	<span class="text-secondary">
@@ -85,7 +85,7 @@
 	        </ul>
 	    </div>
 	</div>
-	<div class="my-5">
+	<div id="post" class="my-5">
 	    <div class="shadow p-sm-5 py-5 px-3">
 	    <c:choose>
 			<c:when test="${requestScope.currentPost != null}">
@@ -95,7 +95,7 @@
 	            </div>
 	            <h1 id="postTitle" class="font-weight-bold font-28 py-3">${requestScope.currentPost.postTitle}</h1>
 	            <div class="author mt-3">
-	                <img class="author-img border border-0 rounded-circle position-relative" src="<%=GlobalValues.profileImg %>${requestScope.adminInfo.adminImg}" alt="profile" style="top: -11px;"/>
+	                <img alt="profile" class="author-img border border-0 rounded-circle position-relative" src="<%=GlobalValues.profileImg %>${requestScope.adminInfo.adminImg}" style="top: -11px;"/>
 	                <div class="d-inline-block ml-2">
 		                <div style="line-height: 20px;">${requestScope.adminInfo.adminNickname}</div>
 		                <div class="text-secondary font-14" style="line-height: 20px;">
@@ -109,13 +109,13 @@
 	        <div class="content-body my-3">
 	            <div class="content-post" style="overflow: auto;">${requestScope.currentPost.postContent}</div>
 	            <div class="text-right mt-5 pr-2">
-	            	<a class="btn px-0" onclick="shareToggler();"><img src="<%=GlobalValues.link%>/resources/images/icon_share.jpg" style="width: 20px;"></a>
+	            	<a class="btn px-0" onclick="shareToggler();"><img alt="share" src="<%=GlobalValues.link%>/resources/images/icon_share.jpg" style="width: 20px;"></a>
 	            </div>
 	            <div id="shareTab" class="text-right d-none">
-	            	<a id="btnTwitter" class="btn px-0" onclick="shareTwitter();"><img src="<%=GlobalValues.link%>/resources/images/icon_twitter.png" style="width: 35px;"></a>
-					<a id="btnFacebook" class="btn px-0" onclick="shareFacebook();"><img src="<%=GlobalValues.link%>/resources/images/icon_facebook.png" style="width: 35px;"></a>
-					<a id="btnKakao" class="btn px-0"><img src="<%=GlobalValues.link%>/resources/images/icon_kakao.png" style="width: 35px;"></a>
-					<a id="btnNaver" class="btn px-0" onclick="shareNaver();"><img src="<%=GlobalValues.link%>/resources/images/icon_naver.png" style="width: 35px;"></a>
+	            	<a id="btnTwitter" class="btn px-0" onclick="shareTwitter();"><img alt="twitter" src="<%=GlobalValues.link%>/resources/images/icon_twitter.png" style="width: 35px;"></a>
+					<a id="btnFacebook" class="btn px-0" onclick="shareFacebook();"><img alt="facebook" src="<%=GlobalValues.link%>/resources/images/icon_facebook.png" style="width: 35px;"></a>
+					<a id="btnKakao" class="btn px-0"><img alt="kakao" src="<%=GlobalValues.link%>/resources/images/icon_kakao.png" style="width: 35px;"></a>
+					<a id="btnNaver" class="btn px-0" onclick="shareNaver();"><img alt="naver" src="<%=GlobalValues.link%>/resources/images/icon_naver.png" style="width: 35px;"></a>
 	            </div>
 	            <c:if test="${sessionScope.admin}">
 	            <div class="text-right font-16 mt-3 pr-2">
@@ -141,7 +141,7 @@
 	                        	</c:choose>
 	                        </td>
 	                        <td class="text-left">
-	                        	<a class="text-dark d-block w-100" href="/${n.categoryEn}/${n.postId}?p=${curPage}">${n.postTitle}</a>
+	                        	<a class="text-dark d-block w-100" href="/${n.categoryEn}/${n.postId}?p=${curPage}#post">${n.postTitle}</a>
 	                        </td>
 	                         <td class="text-right" style="width:100px">
 	                        	<span class="text-secondary">

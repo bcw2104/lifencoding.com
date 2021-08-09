@@ -73,7 +73,7 @@
 	    <h1 class="mb-5 bg-dark text-white p-3 head-font font-24">마이페이지</h1>
 	    <div class="row p-sm-5 p-3">
 	        <div class="col-lg-5 col-xl-4 mb-4 d-flex flex-column justify-content-center">
-	            <img src="<%=GlobalValues.profileImg %>${requestScope.admin.adminImg}" alt="profile" style="width: 150px; height: 150px" class="rounded-circle mb-4">
+	            <img alt="profile" src="<%=GlobalValues.profileImg %>${requestScope.admin.adminImg}" style="width: 150px; height: 150px" class="rounded-circle mb-4">
 	            <br />
 	            <form id="imgForm">
 	                <div class="form-group">
