@@ -13,14 +13,14 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.lifencoding.entity.GuestVO;
 import com.lifencoding.serviceImpl.GuestService;
-import com.lifencoding.util.IpHandler;
+import com.lifencoding.util.RequestHeaderTools;
 
 public class GuestGrantInterceptor implements HandlerInterceptor{
 
 	@Autowired
 	public GuestService guestService;
 	@Autowired
-	public IpHandler ipHandler;
+	public RequestHeaderTools requestHeaderTools;
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -64,11 +64,10 @@ public class GuestGrantInterceptor implements HandlerInterceptor{
 		}
 
 		if(recordIp) {
-			String guestIp = ipHandler.getIp(request);
-			String countryCode = ipHandler.getCountryCode(guestIp);
+			String guestIp = requestHeaderTools.getIp(request);
 			String agent = request.getHeader("user-agent");
 
-			if(!agent.contains("Yeti") || countryCode.equals("KR")) {
+			if(!requestHeaderTools.isCrawler(agent)) {
 				GuestVO guestVO = new GuestVO();
 				guestVO.setGuestIp(guestIp);
 				guestService.add(guestVO);
