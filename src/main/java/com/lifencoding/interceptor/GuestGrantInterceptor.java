@@ -66,8 +66,9 @@ public class GuestGrantInterceptor implements HandlerInterceptor{
 		if(recordIp) {
 			String guestIp = requestHeaderTools.getIp(request);
 			String agent = request.getHeader("user-agent");
+			String countryCode = requestHeaderTools.getCountryCode(guestIp);
 
-			if(!requestHeaderTools.isCrawler(agent)) {
+			if(!requestHeaderTools.isCrawler(agent) && countryCode.equals("KR")) {
 				GuestVO guestVO = new GuestVO();
 				guestVO.setGuestIp(guestIp);
 				guestService.add(guestVO);
