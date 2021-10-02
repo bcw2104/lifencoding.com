@@ -44,29 +44,20 @@
 	</select>
 
 	<select id="selectNear" resultType="postVO" parameterType="postVO">
-		SELECT * FROM
-			(SELECT @rownum1:=@rownum1+1 AS rnum,sorted_tbl.* FROM
-				(SELECT * FROM post_tbl NATURAL JOIN subcategory_tbl
-					<where>
-						<if test="categoryId != 0">category_id = #{categoryId}</if>
-					</where>
-					ORDER BY post_date desc) sorted_tbl, (SELECT @rownum1:=0) tmp) result_tbl
+		SELECT * FROM post_tbl NATURAL JOIN subcategory_tbl
 		WHERE
-			rnum = (SELECT rnum FROM
-				(SELECT @rownum2:=@rownum2+1 AS rnum,sorted_tbl.* FROM (SELECT * FROM post_tbl
-				<where>
-					<if test="categoryId != 0">category_id = #{categoryId}</if>
-				</where>
-				ORDER BY post_date desc) sorted_tbl, (SELECT @rownum2:=0) tmp) result_tbl
-			WHERE post_id = #{postId})+1
+			post_id = (SELECT post_id FROM post_tbl
+						<where>
+							<if test="categoryId != 0">category_id = #{categoryId} AND</if> post_id &lt; #{postId}
+						</where>
+						ORDER BY post_date DESC LIMIT 1)
 			OR
-			rnum = (SELECT rnum FROM
-				(SELECT @rownum3:=@rownum3+1 AS rnum,sorted_tbl.* FROM (SELECT * FROM post_tbl
-				<where>
-					<if test="categoryId != 0">category_id = #{categoryId}</if>
-				</where>
-				ORDER BY post_date desc) sorted_tbl, (SELECT @rownum3:=0) tmp) result_tbl
-			 WHERE post_id = #{postId})-1
+			post_id = (SELECT post_id FROM post_tbl
+						<where>
+							<if test="categoryId != 0">category_id = #{categoryId} AND</if> post_id &gt; #{postId}
+						</where>
+						ORDER BY post_date ASC LIMIT 1)
+ 		ORDER BY post_date ASC
 	</select>
 
 	<select id="selectHot" resultType="postVO">
