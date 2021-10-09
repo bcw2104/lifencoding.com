@@ -32,6 +32,16 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 
+	@GetMapping("/state")
+	@ResponseBody
+	public String state(HttpServletRequest request)throws Exception {
+		if(request.getSession().getAttribute("admin") != null) {
+			return "true";
+		}else {
+			return "false";
+		}
+	}
+
 	@PostMapping("/check.do")
 	@ResponseBody
 	public String check(HttpServletRequest request)throws Exception {
@@ -41,7 +51,7 @@ public class AdminController {
 		String id = (String) object.get("id");
 		String pw = (String) object.get("pw");
 
-		if(adminService.loginCheck(id, pw)) {
+		if(adminService.check(id, pw)) {
 			return "true";
 		}else {
 			return "false";
@@ -57,7 +67,7 @@ public class AdminController {
 		String id = (String) object.get("id");
 		String pw = (String) object.get("pw");
 
-		if(adminService.loginCheck(id, pw)) {
+		if(adminService.check(id, pw)) {
 			HttpSession session = request.getSession();
 			session.removeAttribute("guest");
 			session.removeAttribute("visit");

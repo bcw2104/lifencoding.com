@@ -15,6 +15,7 @@
 		<typeAlias type="com.lifencoding.entity.CategoryVO" alias="categoryVO"/>
 		<typeAlias type="com.lifencoding.entity.PostVO" alias="postVO"/>
 		<typeAlias type="com.lifencoding.entity.GuestVO" alias="guestVO"/>
+		<typeAlias type="com.lifencoding.entity.CommentVO" alias="commentVO"/>
 	</typeAliases>
 </configuration>
 

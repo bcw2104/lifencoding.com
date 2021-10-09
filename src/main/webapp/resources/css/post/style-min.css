@@ -23,6 +23,15 @@
 	word-break: break-all;
 }
 
-.content-comment {
-	font-size: 13px;
+.comment-menu {
+	width:20px;
+	cursor:pointer;
+}
+
+.sub-comment{
+	background-color: #e9ecef;
+}
+
+.comment-box{
+	border-bottom: 1px solid #e9ecef;
 }

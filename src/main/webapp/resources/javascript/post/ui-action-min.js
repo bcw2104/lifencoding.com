@@ -1,9 +1,20 @@
-function hidePostList() {
+
+function hidePostList(){
 	$("#postList").toggleClass("d-none");
 	if ($("#postToggler").text() == "펼치기")
 		$("#postToggler").text("접어두기")
 	else
 		$("#postToggler").text("펼치기")
+}
+
+function deletePost(){
+	$.ajax({
+		url: "/post/"+$("#postId").val()+"/delete.do",
+		type:"post",
+		success:function(redirect){
+			window.location.href = redirect;
+		}
+	});
 }
 
 function shareToggler() {
@@ -52,6 +63,6 @@ $(document).ready(function() {
 
 	$("#postDeleteBtn").click(function() {
 		var ans = confirm("포스트를 삭제하시겠습니까?");
-		return ans;
+		if(ans){deletePost()};
 	});
 });

@@ -77,21 +77,21 @@
 			<if test="thumbnail != null">thumbnail = #{thumbnail}</if>
 		</set>
 		<where>
-			<if test="postId != 0">post_id = #{postId}</if>
+			post_id = #{postId}
 		</where>
 	</update>
 
 	<update id="addHits" parameterType="int">
 		UPDATE post_tbl SET hits = hits+1
 		<where>
-			<if test="postId != 0">post_id = #{postId}</if>
+			post_id = #{postId}
 		</where>
 	</update>
 
 	<delete id="delete" parameterType="postVO">
 		DELETE FROM post_tbl
 		<where>
-			<if test="postId != 0">post_id = #{postId}</if>
+			post_id = #{postId}
 		</where>
 	</delete>
 

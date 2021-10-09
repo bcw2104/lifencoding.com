@@ -23,7 +23,7 @@ public class AdminService{
 	@Autowired
 	private AdminMapper adminMapper;
 
-	public boolean loginCheck(String id, String pw) throws Exception{
+	public boolean check(String id, String pw) throws Exception{
 		AdminVO adminVO = adminMapper.select();
 
 		if(adminVO.getAdminId().equals(id) && adminVO.getAdminPw().equals(authTools.convertValuetoHash(pw)))

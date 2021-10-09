@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="/resources/css/post/style-min.css">
 
 <script src="/resources/javascript/post/ui-action-min.js"></script>
+<script src="/resources/javascript/comment/ui-action-min.js"></script>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
 <c:set var="maxPage" value="${requestScope.postCount%10 > 0 ? requestScope.postCount/10+1 : requestScope.postCount/10}" ></c:set>
@@ -24,6 +25,8 @@
 <fmt:formatDate value="${now}" var="today" pattern="yyyy-MM-dd" />
 
 <div class="container mt-5">
+	<input type="hidden" id="cdnLink" value="<%=GlobalValues.link%>"/>
+	<input type="hidden" id="postId" value="${requestScope.currentPost.postId}"/>
 	<jsp:include page="/WEB-INF/views/category/view.jsp"></jsp:include>
 
 	<div class="p-sm-5 p-3 shadow">
@@ -85,7 +88,7 @@
 	        </ul>
 	    </div>
 	</div>
-	<div id="post" class="my-5">
+	<div id="post" class="my-5 bg-white">
 	    <div class="shadow p-sm-5 py-5 px-3">
 	    <c:choose>
 			<c:when test="${requestScope.currentPost != null}">
@@ -107,7 +110,7 @@
 	        </div>
 	        <hr />
 	        <div class="content-body my-3">
-	            <div class="content-post" style="overflow: auto;">${requestScope.currentPost.postContent}</div>
+	            <div class="content-post body-font-light" style="overflow: auto;">${requestScope.currentPost.postContent}</div>
 	            <div class="text-right mt-5 pr-2">
 	            	<a class="btn px-0" onclick="shareToggler();"><img alt="share" src="<%=GlobalValues.link%>/resources/images/icon_share.jpg" style="width: 20px;"></a>
 	            </div>
@@ -121,9 +124,15 @@
 	            <div class="text-right font-16 mt-3 pr-2">
 	            	<a class="text-secondary" href="/post/${requestScope.currentPost.postId}/edit">수정</a>
 	            	<span class="text-secondary mx-2">|</span>
-	            	<a id="postDeleteBtn" class="text-secondary" href="/post/${requestScope.currentPost.postId}/delete.do">삭제</a>
+	            	<a id="postDeleteBtn" class="text-secondary" href="#none">삭제</a>
 	            </div>
 	            </c:if>
+
+	            <div class="comment m-5">
+	            	<div>댓글 <span id="commentCount" class="text-danger">15</span></div>
+	            	<hr/>
+					<div id="commentContainer"></div>
+	            </div>
 	        </div>
 	        <div class="content-footer mt-2 mx-2">
 	            <table class="table mt-2 font-13">

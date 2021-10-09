@@ -12,6 +12,7 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(java.lang.RuntimeException.class)
 	public void runtimeException(RuntimeException e, HttpServletResponse response) {
+		e.printStackTrace();
 		try {
 			response.sendError(404);
 		} catch (IOException ioe) {
@@ -21,6 +22,7 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(java.lang.NumberFormatException.class)
 	public void numberFormatException(NumberFormatException e, HttpServletResponse response) {
+		e.printStackTrace();
 		try {
 			response.sendError(404);
 		} catch (IOException ioe) {

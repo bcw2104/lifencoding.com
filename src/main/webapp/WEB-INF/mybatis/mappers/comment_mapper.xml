@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+														"HTTP://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lifencoding.mapper.CommentMapper">
+
+	<select id="select" resultType="commentVO" parameterType="commentVO">
+		SELECT * FROM comment_tbl
+		<where>
+			<if test="commentId != 0">comment_id = #{commentId}</if>
+			<if test="postId != 0">AND post_id = #{postId}</if>
+		</where>
+		ORDER BY parent_id ASC, comment_id ASC
+	</select>
+
+	<insert id="insert" parameterType="commentVO">
+		insert into comment_tbl(comment_nickname,comment_pw,comment_content,parent_id,post_id,is_admin)
+		<choose>
+			<when test="parentId == 0">
+				SELECT #{commentNickname},#{commentPw},#{commentContent},AUTO_INCREMENT,#{postId},#{isAdmin}
+					FROM information_schema.tables WHERE table_name = 'comment_tbl' AND table_schema = DATABASE()
+			</when>
+			<otherwise>
+				values(#{commentNickname},#{commentPw},#{commentContent},#{parentId},#{postId},#{isAdmin})
+			</otherwise>
+		</choose>
+	</insert>
+
+	<update id="delete" parameterType="commentVO">
+		UPDATE comment_tbl
+		<set>
+			comment_content = ''
+		</set>
+		<where>
+			comment_id = #{commentId}
+		</where>
+	</update>
+
+</mapper>

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.lifencoding.entity.CategoryVO;
@@ -58,7 +59,7 @@ public class PostController {
 	public String add(@RequestParam("categoryId") String _categoryId,
 						@RequestParam("title") String title,
 						@RequestParam("content") String content,
-						@RequestParam MultipartFile thumbnail,Model model,HttpServletResponse response) throws Exception {
+						@RequestParam MultipartFile thumbnail,HttpServletResponse response) throws Exception {
 
 		PostVO postVO = new PostVO();
 		CategoryVO categoryVO = new CategoryVO();
@@ -96,7 +97,7 @@ public class PostController {
 	public String modify(@RequestParam("categoryId") String _categoryId, @PathVariable("postId") String _postId,
 			@RequestParam("title") String title, @RequestParam("content") String content,
 			@RequestParam(name = "thumbnailCk", required = false) String thumbnailCk,
-			@RequestParam MultipartFile thumbnail, Model model, HttpServletResponse response) throws Exception {
+			@RequestParam MultipartFile thumbnail, HttpServletResponse response) throws Exception {
 
 		PostVO postVO = new PostVO();
 		CategoryVO categoryVO = new CategoryVO();
@@ -137,7 +138,8 @@ public class PostController {
 		return "redirect:/" + categoryVO.getCategoryEn() + "/" + postVO.getPostId();
 	}
 
-	@GetMapping("/{postId}/delete.do")
+	@PostMapping("/{postId}/delete.do")
+	@ResponseBody
 	public String delete(@PathVariable("postId") String _postId) throws Exception {
 
 		PostVO postVO = new PostVO();
@@ -154,7 +156,7 @@ public class PostController {
 		categoryVO.setCategoryId(postVO.getCategoryId());
 		categoryVO = subCategoryService.get(categoryVO);
 
-		return "redirect:/" + categoryVO.getCategoryEn();
+		return "/" + categoryVO.getCategoryEn();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -185,7 +187,7 @@ public class PostController {
 
 			response.getWriter().write(object.toJSONString());
 		} else {
-			response.getWriter().write("<script>alert('사진의 확장자는 svg,bmp,png,jpg,jpeg만 가능합니다.')</script>");
+			response.getWriter().write("<script>alert('�궗吏꾩쓽 �솗�옣�옄�뒗 svg,bmp,png,jpg,jpeg留� 媛��뒫�빀�땲�떎.')</script>");
 		}
 
 	}
