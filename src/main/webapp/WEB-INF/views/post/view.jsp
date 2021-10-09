@@ -128,7 +128,7 @@
 	            </div>
 	            </c:if>
 
-	            <div class="comment m-5">
+	            <div class="comment m-sm-5">
 	            	<div>댓글 <span id="commentCount" class="text-danger">15</span></div>
 	            	<hr/>
 					<div id="commentContainer"></div>
