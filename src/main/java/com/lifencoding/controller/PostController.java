@@ -187,7 +187,7 @@ public class PostController {
 
 			response.getWriter().write(object.toJSONString());
 		} else {
-			response.getWriter().write("<script>alert('�궗吏꾩쓽 �솗�옣�옄�뒗 svg,bmp,png,jpg,jpeg留� 媛��뒫�빀�땲�떎.')</script>");
+			response.getWriter().write("<script>alert('사진의 확장자는 svg,bmp,png,jpg,jpeg만 가능합니다.')</script>");
 		}
 
 	}
