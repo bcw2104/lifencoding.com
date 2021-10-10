@@ -14,14 +14,14 @@
 	</select>
 
 	<insert id="insert" parameterType="commentVO">
-		insert into comment_tbl(comment_nickname,comment_pw,comment_content,parent_id,post_id,is_admin)
+		insert into comment_tbl(comment_nickname,comment_pw,comment_content,parent_id,post_id,is_admin,salt)
 		<choose>
 			<when test="parentId == 0">
-				SELECT #{commentNickname},#{commentPw},#{commentContent},AUTO_INCREMENT,#{postId},#{isAdmin}
+				SELECT #{commentNickname},#{commentPw},#{commentContent},AUTO_INCREMENT,#{postId},#{isAdmin},#{salt}
 					FROM information_schema.tables WHERE table_name = 'comment_tbl' AND table_schema = DATABASE()
 			</when>
 			<otherwise>
-				values(#{commentNickname},#{commentPw},#{commentContent},#{parentId},#{postId},#{isAdmin})
+				values(#{commentNickname},#{commentPw},#{commentContent},#{parentId},#{postId},#{isAdmin},#{salt})
 			</otherwise>
 		</choose>
 	</insert>

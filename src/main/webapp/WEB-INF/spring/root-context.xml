@@ -52,8 +52,8 @@
 	</bean>
 
 	<!-- Util beans -->
-	<bean class="com.lifencoding.util.AuthTools" />
-	<bean class="com.lifencoding.util.MailTools" />
+	<bean class="com.lifencoding.util.SecureTool" />
+	<bean class="com.lifencoding.util.MailTool" />
 	<bean class="com.lifencoding.util.FTPManager" />
 	<bean class="com.lifencoding.util.RequestHeaderTools" />
 </beans>

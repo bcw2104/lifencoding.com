@@ -7,6 +7,7 @@ public class AdminVO {
 	private String adminNickname;
 	private String adminComment;
 	private String adminImg;
+	private String salt;
 
 	public AdminVO() {
 		adminId = null;
@@ -15,6 +16,7 @@ public class AdminVO {
 		adminNickname = null;
 		adminComment = null;
 		adminImg = null;
+		salt = null;
 	}
 
 	public String getAdminId() {
@@ -54,6 +56,14 @@ public class AdminVO {
 
 	public void setAdminImg(String adminImg) {
 		this.adminImg = adminImg;
+	}
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
 
 }

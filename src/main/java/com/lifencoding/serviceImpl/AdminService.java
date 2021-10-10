@@ -7,17 +7,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.lifencoding.entity.AdminVO;
 import com.lifencoding.mapper.AdminMapper;
-import com.lifencoding.util.AuthTools;
+import com.lifencoding.util.SecureTool;
 import com.lifencoding.util.FTPManager;
-import com.lifencoding.util.FileTools;
-import com.lifencoding.util.MailTools;
+import com.lifencoding.util.FileTool;
+import com.lifencoding.util.MailTool;
 
 @Service
 public class AdminService{
 	@Autowired
-	private AuthTools authTools;
+	private SecureTool secureTool;
 	@Autowired
-	private MailTools mailTools;
+	private MailTool mailTool;
 	@Autowired
 	private FTPManager manager;
 	@Autowired
@@ -26,7 +26,7 @@ public class AdminService{
 	public boolean check(String id, String pw) throws Exception{
 		AdminVO adminVO = adminMapper.select();
 
-		if(adminVO.getAdminId().equals(id) && adminVO.getAdminPw().equals(authTools.convertValuetoHash(pw)))
+		if(adminVO.getAdminId().equals(id) && adminVO.getAdminPw().equals(secureTool.encrypt(pw,adminVO.getSalt())))
 			return true;
 		else
 			return false;
@@ -38,13 +38,16 @@ public class AdminService{
 
 	public void changeAdminInfo(AdminVO adminVO) throws Exception {
 		if(adminVO.getAdminPw() != null) {
-			adminVO.setAdminPw(authTools.convertValuetoHash(adminVO.getAdminPw()));
+			String salt = secureTool.createSalt();
+
+			adminVO.setAdminPw(secureTool.encrypt(adminVO.getAdminPw(),salt));
+			adminVO.setSalt(salt);
 		}
 		adminMapper.modify(adminVO);
 	}
 
 	public String changeAdminPwRandom() throws Exception {
-		String randomStr = authTools.makeRandomString(10);
+		String randomStr = secureTool.makeRandomString(10);
 		AdminVO adminVO = new AdminVO();
 		adminVO.setAdminPw(randomStr);
 
@@ -55,12 +58,12 @@ public class AdminService{
 
 	public String sendMail(String email,String id,String pw) throws Exception {
 		if(pw != null) {
-			mailTools.sendAdminInfoMail(email, id, pw);
+			mailTool.sendAdminInfoMail(email, id, pw);
 			return null;
 		}
 		else {
-			String code = authTools.makeRandomString(8);
-			mailTools.sendConfirmMail(email,code);
+			String code = secureTool.makeRandomString(8);
+			mailTool.sendConfirmMail(email,code);
 
 			return code;
 		}
@@ -68,7 +71,7 @@ public class AdminService{
 
 	public void changeProfileImg(MultipartFile mfile,String fileName) throws Exception {
 		FTPClient client = manager.connect();
-		FileTools fileTools = new FileTools(client);
+		FileTool fileTools = new FileTool(client);
 
 		String oldFileName = adminMapper.select().getAdminImg();
 

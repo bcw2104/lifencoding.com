@@ -53,6 +53,7 @@ public class CommentController {
 			AdminVO adminVO = adminService.getAdminInfo();
 			commentVO.setCommentNickname(adminVO.getAdminNickname());
 			commentVO.setCommentPw(adminVO.getAdminPw());
+			commentVO.setSalt(adminVO.getSalt());
 			commentVO.setIsAdmin(1);
 		}
 		else if(commentNickname != null && commentPw != null) {

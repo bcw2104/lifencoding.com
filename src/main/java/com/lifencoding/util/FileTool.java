@@ -7,7 +7,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.springframework.web.multipart.MultipartFile;
 
-public class FileTools {
+public class FileTool {
 	private String link;
 	private String root;
 	private String profileDirPath;
@@ -15,7 +15,7 @@ public class FileTools {
 
 	FTPClient client = null;
 
-	public FileTools(FTPClient client) {
+	public FileTool(FTPClient client) {
 		this.link = GlobalValues.link;
 
 		this.root = "/www";

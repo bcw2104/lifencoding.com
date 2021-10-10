@@ -12,7 +12,7 @@ import com.lifencoding.entity.PostVO;
 import com.lifencoding.mapper.PostMapper;
 import com.lifencoding.service.ContentServiceImpl;
 import com.lifencoding.util.FTPManager;
-import com.lifencoding.util.FileTools;
+import com.lifencoding.util.FileTool;
 
 @Service
 public class PostService implements ContentServiceImpl<PostVO>{
@@ -119,7 +119,7 @@ public class PostService implements ContentServiceImpl<PostVO>{
 
 	public String uploadImg(int postId,String type,String fileName,MultipartFile mfile) throws Exception {
 		FTPClient client = manager.connect();
-		FileTools fileTools = new FileTools(client);
+		FileTool fileTools = new FileTool(client);
 
 		String dir = fileTools.getPostDirPath();
 
@@ -139,7 +139,7 @@ public class PostService implements ContentServiceImpl<PostVO>{
 
 	public void changeUploadDir(int postId) throws Exception {
 		FTPClient client = manager.connect();
-		FileTools fileTools = new FileTools(client);
+		FileTool fileTools = new FileTool(client);
 
 		String path= fileTools.getPostDirPath();
 
@@ -153,7 +153,7 @@ public class PostService implements ContentServiceImpl<PostVO>{
 
 	public void deleteThumbnail(int postId) throws Exception {
 		FTPClient client = manager.connect();
-		FileTools fileTools = new FileTools(client);
+		FileTool fileTools = new FileTool(client);
 
 		String dir= fileTools.getPostDirPath()+File.separator+postId;
 		String fileName = "thumbnail";
@@ -164,7 +164,7 @@ public class PostService implements ContentServiceImpl<PostVO>{
 	}
 	public void deleteImgFile(int postId) throws Exception {
 		FTPClient client = manager.connect();
-		FileTools fileTools = new FileTools(client);
+		FileTool fileTools = new FileTool(client);
 
 		String dir = fileTools.getPostDirPath();
 

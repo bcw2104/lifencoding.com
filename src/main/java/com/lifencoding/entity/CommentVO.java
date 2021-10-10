@@ -11,6 +11,7 @@ public class CommentVO {
 	private int parentId;
 	private int postId;
 	private int isAdmin;
+	private String salt;
 
 	public CommentVO() {
 		commentId = 0;
@@ -21,6 +22,7 @@ public class CommentVO {
 		parentId = 0;
 		postId = 0;
 		isAdmin = 0;
+		salt = null;
 	}
 
 	public int getCommentId() {
@@ -85,6 +87,14 @@ public class CommentVO {
 
 	public void setIsAdmin(int isAdmin) {
 		this.isAdmin = isAdmin;
+	}
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
 
 }

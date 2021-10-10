@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 import com.lifencoding.entity.CommentVO;
 import com.lifencoding.mapper.CommentMapper;
 import com.lifencoding.service.ContentServiceImpl;
-import com.lifencoding.util.AuthTools;
+import com.lifencoding.util.SecureTool;
 
 @Service
 public class CommentService implements ContentServiceImpl<CommentVO>{
 
 	@Autowired
-	private AuthTools authTools;
+	private SecureTool secureTool;
 	@Autowired
 	private CommentMapper commentMapper;
 
@@ -48,7 +48,7 @@ public class CommentService implements ContentServiceImpl<CommentVO>{
 		commentVO.setCommentId(commentId);
 		commentVO = get(commentVO);
 
-		if(commentVO.getCommentPw().equals(authTools.convertValuetoHash(pw)))
+		if(commentVO.getCommentPw().equals(secureTool.encrypt(pw,commentVO.getSalt())))
 			return true;
 		else
 			return false;
@@ -74,9 +74,12 @@ public class CommentService implements ContentServiceImpl<CommentVO>{
 
 	@Override
 	public void add(CommentVO commentVO) throws Exception {
+		String salt = secureTool.createSalt();
+
 		if(commentVO.getIsAdmin() == 0) {
-			String hashedPw = authTools.convertValuetoHash(commentVO.getCommentPw());
-			commentVO.setCommentPw(hashedPw);
+			String encryptedPw = secureTool.encrypt(commentVO.getCommentPw(),salt);
+			commentVO.setCommentPw(encryptedPw);
+			commentVO.setSalt(salt);
 		}
 		commentMapper.insert(commentVO);
 	}
