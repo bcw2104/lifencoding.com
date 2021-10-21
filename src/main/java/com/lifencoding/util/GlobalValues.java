@@ -2,6 +2,8 @@ package com.lifencoding.util;
 
 public class GlobalValues {
 
+	public final static String home = "/WEB-INF/views/home/home.jsp";
+
 	//admin
 	public final static String adminInfo = "/WEB-INF/views/admin/info.jsp";
 

@@ -4,6 +4,10 @@
 
 <mapper namespace="com.lifencoding.mapper.AdminMapper">
 
+	<select id="info" resultType="adminVO">
+		SELECT admin_id,admin_email,admin_nickname,admin_comment,admin_img FROM admin_info
+	</select>
+
 	<select id="select" resultType="adminVO">
 		SELECT * FROM admin_info
 	</select>

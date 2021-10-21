@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.lifencoding.annotation.Auth;
+import com.lifencoding.annotation.Auth.Type;
 import com.lifencoding.entity.AdminVO;
 import com.lifencoding.serviceImpl.AdminService;
 import com.lifencoding.util.GlobalValues;
@@ -42,6 +44,7 @@ public class AdminController {
 		}
 	}
 
+	@Auth(type = Type.ADMIN)
 	@PostMapping("/check.do")
 	@ResponseBody
 	public String check(HttpServletRequest request)throws Exception {
@@ -51,7 +54,7 @@ public class AdminController {
 		String id = (String) object.get("id");
 		String pw = (String) object.get("pw");
 
-		if(adminService.check(id, pw)) {
+		if(adminService.checkPassword(id, pw)) {
 			return "true";
 		}else {
 			return "false";
@@ -67,7 +70,7 @@ public class AdminController {
 		String id = (String) object.get("id");
 		String pw = (String) object.get("pw");
 
-		if(adminService.check(id, pw)) {
+		if(adminService.checkPassword(id, pw)) {
 			HttpSession session = request.getSession();
 			session.removeAttribute("guest");
 			session.removeAttribute("visit");
@@ -80,6 +83,7 @@ public class AdminController {
 		}
 	}
 
+	@Auth(type = Type.ADMIN)
 	@GetMapping("/logout.do")
 	public String logout(HttpSession session)throws Exception {
 		session.invalidate();
@@ -107,13 +111,14 @@ public class AdminController {
 		}
 	}
 
+	@Auth(type = Type.ADMIN)
 	@GetMapping("/info")
 	public String info(Model model)throws Exception {
 		AdminVO adminVO = adminService.getAdminInfo();
 		model.addAttribute("admin", adminVO);
 		model.addAttribute("content", GlobalValues.adminInfo);
 
-		return "forward:/";
+		return "frame";
 	}
 
 	@GetMapping("/profileImg.do")
@@ -124,6 +129,7 @@ public class AdminController {
 		return fileName;
 	}
 
+	@Auth(type = Type.ADMIN)
 	@PostMapping("/changeImg.do")
 	@ResponseBody
 	public void changeImg(MultipartHttpServletRequest filelist)throws Exception {
@@ -141,6 +147,7 @@ public class AdminController {
 		}
 	}
 
+	@Auth(type = Type.ADMIN)
 	@PostMapping("/modify.do")
 	@ResponseBody
 	public void modify(HttpServletRequest request)throws Exception {
@@ -167,6 +174,7 @@ public class AdminController {
 		adminService.changeAdminInfo(adminVO);
 	}
 
+	@Auth(type = Type.ADMIN)
 	@GetMapping("/code.do")
 	@ResponseBody
 	public void code(HttpServletRequest request,@RequestParam("email") String email)throws Exception {
@@ -176,6 +184,7 @@ public class AdminController {
 		request.getSession().setAttribute("emailCode", code);
 	}
 
+	@Auth(type = Type.ADMIN)
 	@GetMapping("/confirm.do")
 	@ResponseBody
 	public String confirm(@RequestParam("code") String code,

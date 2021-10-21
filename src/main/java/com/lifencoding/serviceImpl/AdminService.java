@@ -23,7 +23,7 @@ public class AdminService{
 	@Autowired
 	private AdminMapper adminMapper;
 
-	public boolean check(String id, String pw) throws Exception{
+	public boolean checkPassword(String id, String pw) throws Exception{
 		AdminVO adminVO = adminMapper.select();
 
 		if(adminVO.getAdminId().equals(id) && adminVO.getAdminPw().equals(secureTool.encrypt(pw,adminVO.getSalt())))
@@ -33,6 +33,10 @@ public class AdminService{
 	}
 
 	public AdminVO getAdminInfo() {
+		return adminMapper.info();
+	}
+
+	public AdminVO getAdminAllData() {
 		return adminMapper.select();
 	}
 
@@ -73,7 +77,7 @@ public class AdminService{
 		FTPClient client = manager.connect();
 		FileTool fileTools = new FileTool(client);
 
-		String oldFileName = adminMapper.select().getAdminImg();
+		String oldFileName = adminMapper.info().getAdminImg();
 
 		String dir = fileTools.getProfileDirPath();
 

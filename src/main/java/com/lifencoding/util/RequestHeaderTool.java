@@ -15,13 +15,13 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
 
 
-public class RequestHeaderTools {
+public class RequestHeaderTool {
 
 	@Value("${key.whois}")
 	private String whoisKey;
 	private ArrayList<String> botList;
 
-	public RequestHeaderTools() {
+	public RequestHeaderTool() {
 		botList = new ArrayList<String>();
 
 		botList.add("yeti");

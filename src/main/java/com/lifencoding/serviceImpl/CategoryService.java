@@ -7,10 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.lifencoding.entity.CategoryVO;
 import com.lifencoding.mapper.CategoryMapper;
-import com.lifencoding.service.ContentServiceImpl;
 
 @Service
-public class CategoryService implements ContentServiceImpl<CategoryVO> {
+public class CategoryService{
 
 	@Autowired
 	private CategoryMapper categoryMapper;

@@ -23,19 +23,34 @@ button, li{
 	font-size: 80%
 }
 
-.pager-item {
-	font-size: 13px;
-	line-height: 35px;
-	text-align: center;
-	width: 35px;
-	height: 35px;
-	margin: 0 1px
+/* pagination */
+.pagination{
+	justify-content: center;
+}
+.paginationjs-pages > ul{
+	display:flex;
+	list-style: none;
+	justify-content: center;
+
+	padding:0px;
 }
 
-.pager-item:hover, .pager-item-active {
-	border: 1px solid lightgray;
-	border-radius: 5px
+.paginationjs-pages > ul > li{
+	cursor:pointer;
+	padding: 10px;
 }
+
+.paginationjs-pages > ul > li > a{
+	color:#858585;
+}
+
+.paginationjs-page.active,
+.paginationjs-page:hover{
+	font-weight: bold;
+	color:#000000;
+}
+
+/* font-size */
 
 .font-12 {
 	font-size: 12px
