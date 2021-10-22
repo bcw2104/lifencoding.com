@@ -4,7 +4,7 @@ function getParams(){
 	var ret = {};
     for(var i = 0; i < array.length; i++){
 		var temp = array[i].split('=');
-		ret[temp[0]]=temp[1];
+		ret[temp[0]]=decodeURI(temp[1]);
 	}
     return ret;
 }

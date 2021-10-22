@@ -42,9 +42,16 @@ public class PostController {
 
 	@GetMapping(value = "/list.do",produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public String list(@RequestParam("id") int categoryId) throws JsonProcessingException {
+	public String list(@RequestParam(value = "id", required = false) String _categoryId
+						,@RequestParam(value = "search", required = false) String search) throws JsonProcessingException {
 		PostVO postVO = new PostVO();
-		postVO.setCategoryId(categoryId);
+		if(_categoryId != null && _categoryId.length() > 0) {
+			postVO.setCategoryId(Integer.parseInt(_categoryId));
+		}
+		if(search != null  && search.length() > 0) {
+			postVO.setPostTitle(search);
+		}
+
 		ArrayList<PostVO> postList = postService.getPostList(postVO);
 
 		return JsonTool.arrayToJson(postList);

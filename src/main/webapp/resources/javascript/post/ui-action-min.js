@@ -62,7 +62,7 @@ function getParams(){
 	var ret = {};
     for(var i = 0; i < array.length; i++){
 		var temp = array[i].split('=');
-		ret[temp[0]]=temp[1];
+		ret[temp[0]]=decodeURI(temp[1]);
 	}
     return ret;
 }
@@ -99,7 +99,7 @@ function timestampToDate(timestamp) {
 function createPostItem(data){
 	html = '<tr>'
 			    +'<td class="text-left">'
-				+'<a class="text-dark" href="/'+data.categoryEn+'/'+data.postId+'">'+data.postTitle+'</a>'
+				+'<a class="text-dark" href="/'+data.categoryEn+'/'+data.postId+'#post">'+data.postTitle+'</a>'
 			+'</td>'
 			+'<td class="text-right">'
 				+'<span class="text-secondary">'+timestampToDate(data.postDate)+'</span>'
@@ -111,6 +111,7 @@ function createPostItem(data){
 
 $(document).ready(function() {
 	var params = getParams();
+	var search = (params["search"] == undefined ? "" : "?search="+params["search"]);
 	params["p"] = (params["p"] == undefined ? 1 : params["p"]);
 
 	if ($("#btnKakao").length == 1) {
@@ -122,13 +123,12 @@ $(document).ready(function() {
 		if(ans){deletePost()};
 	});
 
-
 	$('.post-list-wrap >.pagination').pagination({
 		dataSource: function(done) {
 		    $.ajax({
 		        type: "get",
 		        url: "/post/list.do",
-				data : {'id':$("#categoryId").text()},
+				data : {'id':$("#categoryId").text(),'search': params["search"]},
 		        success: function(response) {
 		            done(response);
 		        }
@@ -139,9 +139,10 @@ $(document).ready(function() {
 	    callback: function(data, pagination) {
 			if (typeof (history.pushState) != undefined) {
 				var renewURL = location.href.split("?")[0];
-				var queryString = "?p="+pagination.pageNumber;
+				var queryString = (search=="" ? "?" : search+"&")+"p="+pagination.pageNumber;
 		        history.pushState(null, null, renewURL+queryString);
     		}
+			$("#postCnt").text("("+pagination.totalNumber+")");
 			$(".post-list").empty();
 			var html;
 			for(var i in data){

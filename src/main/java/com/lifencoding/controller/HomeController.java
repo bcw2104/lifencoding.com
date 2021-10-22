@@ -10,8 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import com.lifencoding.entity.AdminVO;
 import com.lifencoding.entity.CategoryVO;
 import com.lifencoding.entity.PostVO;
 import com.lifencoding.serviceImpl.AdminService;
@@ -35,23 +35,51 @@ public class HomeController {
 	@Autowired
 	private GuestService guestService;
 
+	@SuppressWarnings("unchecked")
 	@GetMapping("/")
-	public String home(Model model) {
+	public String home(@RequestParam(value="search",required = false) String search, Model model, HttpSession session) {
+		if(search == null) {
+			ArrayList<CategoryVO> categoryList = categoryService.getList();
+			ArrayList<CategoryVO> subCategoryList = subCategoryService.getList();
 
-		ArrayList<CategoryVO> categoryList = categoryService.getList();
-		ArrayList<CategoryVO> subCategoryList = subCategoryService.getList();
+			int totalVisit = guestService.getTotalVisit();
+			int todayVisit = guestService.getTodayVisit();
 
-		AdminVO adminInfo = adminService.getAdminInfo();
+			model.addAttribute("totalVisit",totalVisit);
+			model.addAttribute("todayVisit", todayVisit);
+			model.addAttribute("categoryList", categoryList);
+			model.addAttribute("subCategoryList", subCategoryList);
+			model.addAttribute("content", GlobalValues.home);
+		}
+		else {
+			int postId;
+			PostVO postVO = new PostVO();
+			postVO.setPostTitle(search);
 
-		int totalVisit = guestService.getTotalVisit();
-		int todayVisit = guestService.getTodayVisit();
+			postVO = postService.getPost(postVO);
 
-		model.addAttribute("totalVisit",totalVisit);
-		model.addAttribute("todayVisit", todayVisit);
-		model.addAttribute("content", GlobalValues.home);
-		model.addAttribute("categoryList", categoryList);
-		model.addAttribute("subCategoryList", subCategoryList);
-		model.addAttribute("adminInfo",adminInfo);
+			if(postVO != null) {
+				postId = postVO.getPostId();
+
+				if(session.getAttribute("postVisitList") == null) {
+					session.setAttribute("postVisitList", new ArrayList<Integer>());
+				}
+				ArrayList<Integer> visitList = (ArrayList<Integer>) session.getAttribute("postVisitList");
+				if(postService.isFirstVisit(visitList,postId)) {
+					postService.increaseHits(postId);
+					postVO.setHits(postVO.getHits()+1);
+					visitList.add(postId);
+				}
+
+				model.addAttribute("currentPost", postVO);
+				model.addAttribute("postTumbnail", postService.makePostThumbnail( postVO.getPostContent(),160));
+				model.addAttribute("nearPost", postService.getNearPost(postVO));
+			}
+
+			model.addAttribute("content", GlobalValues.postView);
+		}
+
+		model.addAttribute("adminInfo",adminService.getAdminInfo());
 
 		return "frame";
 	}

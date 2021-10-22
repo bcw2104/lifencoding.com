@@ -11,7 +11,6 @@
 <script type="text/javascript" src="/resources/javascript/pagination/pagination.js"></script>
 <script type="text/javascript" src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
-<c:set var="maxPage" value="${requestScope.postCount%10 > 0 ? requestScope.postCount/10+1 : requestScope.postCount/10}" ></c:set>
 <c:set var="now" value="<%=new java.util.Date()%>" />
 <fmt:formatDate value="${now}" var="today" pattern="yyyy-MM-dd" />
 
