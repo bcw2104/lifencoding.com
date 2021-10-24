@@ -51,7 +51,7 @@ function createPostItem(cdnLink,data){
 						+'<span class="text-secondary">'+timestampToDate(data.postDate)+'</span>'
 					+'</div>'
 				+'</div>'
-				+'<img alt="thumbnail" class="thumbnail ml-3" src="'+cdnLink+'/resources/upload/files/post/'+data.postId+'/thumbnail/'+data.thumbnail+'">'
+				+(data.thumbnail == "" ? '' : '<img alt="thumbnail" class="thumbnail ml-3" src="'+cdnLink+'/resources/upload/files/post/'+data.postId+'/thumbnail/'+data.thumbnail+'">')
 			+'</div>'
 			+'<hr/>';
 

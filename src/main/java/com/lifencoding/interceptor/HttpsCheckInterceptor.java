@@ -10,16 +10,18 @@ public class HttpsCheckInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 
-		/*
-		 * String serverPort = request.getHeader("x-server_port");
-		 *
-		 * if (serverPort != null && serverPort.equals("443")) { return true; } else {
-		 * String url = request.getRequestURL().toString(); if
-		 * (url.startsWith("http://")) { url = url.replace("http://", "https://");
-		 * response.sendRedirect(url); }
-		 *
-		 * return false; }
-		 */
-		return true;
+		String serverPort = request.getHeader("x-server_port");
+
+		if (serverPort != null && serverPort.equals("443")) {
+			return true;
+		} else {
+			String url = request.getRequestURL().toString();
+			if (url.startsWith("http://")) {
+				url = url.replace("http://", "https://");
+				response.sendRedirect(url);
+			}
+
+			return false;
+		}
 	}
 }

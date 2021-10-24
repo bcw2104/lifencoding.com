@@ -38,28 +38,25 @@ public class HomeController {
 	@SuppressWarnings("unchecked")
 	@GetMapping("/")
 	public String home(@RequestParam(value="search",required = false) String search, Model model, HttpSession session) {
+		ArrayList<CategoryVO> categoryList = categoryService.getList();
+		ArrayList<CategoryVO> subCategoryList = subCategoryService.getList();
+
 		if(search == null) {
-			ArrayList<CategoryVO> categoryList = categoryService.getList();
-			ArrayList<CategoryVO> subCategoryList = subCategoryService.getList();
+				int totalVisit = guestService.getTotalVisit();
+				int todayVisit = guestService.getTodayVisit();
 
-			int totalVisit = guestService.getTotalVisit();
-			int todayVisit = guestService.getTodayVisit();
-
-			model.addAttribute("totalVisit",totalVisit);
-			model.addAttribute("todayVisit", todayVisit);
-			model.addAttribute("categoryList", categoryList);
-			model.addAttribute("subCategoryList", subCategoryList);
+				model.addAttribute("totalVisit",totalVisit);
+				model.addAttribute("todayVisit", todayVisit);
 			model.addAttribute("content", GlobalValues.home);
 		}
 		else {
-			int postId;
 			PostVO postVO = new PostVO();
 			postVO.setPostTitle(search);
 
 			postVO = postService.getPost(postVO);
 
 			if(postVO != null) {
-				postId = postVO.getPostId();
+				int postId = postVO.getPostId();
 
 				if(session.getAttribute("postVisitList") == null) {
 					session.setAttribute("postVisitList", new ArrayList<Integer>());
@@ -80,6 +77,8 @@ public class HomeController {
 		}
 
 		model.addAttribute("adminInfo",adminService.getAdminInfo());
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("subCategoryList", subCategoryList);
 
 		return "frame";
 	}
@@ -90,10 +89,11 @@ public class HomeController {
 							,@PathVariable(required=false) String _postId
 							,Model model, HttpSession session) throws IOException {
 
-		int postId;
 		CategoryVO categoryVO = new CategoryVO();
 		CategoryVO subCategoryVO = new CategoryVO();
 		PostVO postVO = new PostVO();
+		ArrayList<CategoryVO> categoryList = categoryService.getList();
+		ArrayList<CategoryVO> subCategoryList = subCategoryService.getList();
 
 		subCategoryVO.setCategoryEn(categoryEn);
 		subCategoryVO = subCategoryService.get(subCategoryVO);
@@ -103,36 +103,40 @@ public class HomeController {
 		postVO.setCategoryId(subCategoryVO.getCategoryId());
 		categoryVO.setCategoryId(subCategoryVO.getParent());
 
-		if(_postId == null)
-			postId = postService.getRecentId(postVO);
-		else
-			postId = Integer.parseInt(_postId);
-
-		postVO.setPostId(postId);
-		postVO = postService.getPost(postVO);
 		categoryVO = categoryService.get(categoryVO);
 
-		if(session.getAttribute("postVisitList") == null) {
-			session.setAttribute("postVisitList", new ArrayList<Integer>());
+		if(_postId == null) {
+			postVO = postService.getPost(postVO);
 		}
-		ArrayList<Integer> visitList = (ArrayList<Integer>) session.getAttribute("postVisitList");
-		if(postService.isFirstVisit(visitList,postId)) {
-			postService.increaseHits(postId);
-			postVO.setHits(postVO.getHits()+1);
-			visitList.add(postId);
+		else {
+			postVO.setPostId(Integer.parseInt(_postId));
+			postVO = postService.getPost(postVO);
 		}
 
 		if (postVO != null) {
+			int postId = postVO.getPostId();
+
+			if(session.getAttribute("postVisitList") == null) {
+				session.setAttribute("postVisitList", new ArrayList<Integer>());
+			}
+			ArrayList<Integer> visitList = (ArrayList<Integer>) session.getAttribute("postVisitList");
+			if(postService.isFirstVisit(visitList,postId)) {
+				postService.increaseHits(postId);
+				postVO.setHits(postVO.getHits()+1);
+				visitList.add(postId);
+			}
+
 			model.addAttribute("adminInfo", adminService.getAdminInfo());
 			model.addAttribute("currentPost", postVO);
 			model.addAttribute("postTumbnail", postService.makePostThumbnail( postVO.getPostContent(),160));
 			model.addAttribute("nearPost", postService.getNearPost(postVO));
-			model.addAttribute("content", GlobalValues.postView);
-			model.addAttribute("currentCategory", categoryVO);
-			model.addAttribute("currentSubCategory", subCategoryVO);
-		} else {
-			throw new RuntimeException();
 		}
+
+		model.addAttribute("currentCategory", categoryVO);
+		model.addAttribute("currentSubCategory", subCategoryVO);
+		model.addAttribute("content", GlobalValues.postView);
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("subCategoryList", subCategoryList);
 
 		return "frame";
 	}

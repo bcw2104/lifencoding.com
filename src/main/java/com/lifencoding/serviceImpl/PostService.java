@@ -46,10 +46,6 @@ public class PostService{
 		}
 	}
 
-	public int getRecentId(PostVO postVO) {
-		return postMapper.getRecentId(postVO);
-	}
-
 	public int getNextPostId() {
 		return postMapper.getSequenceNum();
 	}
@@ -96,9 +92,9 @@ public class PostService{
 
 	public String uploadImg(int postId,String type,String fileName,MultipartFile mfile) throws Exception {
 		FTPClient client = manager.connect();
-		FileTool fileTools = new FileTool(client);
+		FileTool fileTool = new FileTool(client);
 
-		String dir = fileTools.getPostDirPath();
+		String dir = fileTool.getPostDirPath();
 
 		if(postId == 0) {
 			dir+= File.separator + "temp" + File.separator + type;
@@ -107,7 +103,7 @@ public class PostService{
 			dir+= File.separator + postId + File.separator + type;
 		}
 
-		String reply = fileTools.createPostTempFile(dir, fileName, mfile);
+		String reply = fileTool.createPostTempFile(dir, fileName, mfile);
 
 		manager.disconnect(client);
 
@@ -116,36 +112,36 @@ public class PostService{
 
 	public void changeUploadDir(int postId) throws Exception {
 		FTPClient client = manager.connect();
-		FileTool fileTools = new FileTool(client);
+		FileTool fileTool = new FileTool(client);
 
-		String path= fileTools.getPostDirPath();
+		String path= fileTool.getPostDirPath();
 
-		boolean reply = fileTools.rename(path+File.separator+"temp",path+File.separator+postId);
+		boolean reply = fileTool.rename(path+File.separator+"temp",path+File.separator+postId);
 
 		if(!reply) {
-			fileTools.createDirectorys(path+File.separator+postId);
+			fileTool.createDirectorys(path+File.separator+postId);
 		}
 		manager.disconnect(client);
 	}
 
 	public void deleteThumbnail(int postId) throws Exception {
 		FTPClient client = manager.connect();
-		FileTool fileTools = new FileTool(client);
+		FileTool fileTool = new FileTool(client);
 
-		String dir= fileTools.getPostDirPath()+File.separator+postId;
+		String dir= fileTool.getPostDirPath()+File.separator+postId;
 		String fileName = "thumbnail";
 
-		fileTools.remove(dir,fileName);
+		fileTool.remove(dir,fileName);
 
 		manager.disconnect(client);
 	}
 	public void deleteImgFile(int postId) throws Exception {
 		FTPClient client = manager.connect();
-		FileTool fileTools = new FileTool(client);
+		FileTool fileTool = new FileTool(client);
 
-		String dir = fileTools.getPostDirPath();
+		String dir = fileTool.getPostDirPath();
 
-		fileTools.remove(dir,String.valueOf(postId));
+		fileTool.remove(dir,String.valueOf(postId));
 
 		manager.disconnect(client);
 	}
