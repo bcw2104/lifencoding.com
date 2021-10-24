@@ -25,6 +25,7 @@ import com.lifencoding.annotation.Auth;
 import com.lifencoding.annotation.Auth.Type;
 import com.lifencoding.entity.CategoryVO;
 import com.lifencoding.entity.PostVO;
+import com.lifencoding.serviceImpl.CategoryService;
 import com.lifencoding.serviceImpl.PostService;
 import com.lifencoding.serviceImpl.SubCategoryService;
 import com.lifencoding.util.GlobalValues;
@@ -37,6 +38,8 @@ public class PostController {
 
 	@Autowired
 	private PostService postService;
+	@Autowired
+	private CategoryService categoryService;
 	@Autowired
 	private SubCategoryService subCategoryService;
 
@@ -86,7 +89,11 @@ public class PostController {
 	@Auth(type = Type.ADMIN)
 	@GetMapping("/create")
 	public String create(Model model) throws Exception {
-		postService.deleteImgFile(0);
+		ArrayList<CategoryVO> categoryList = categoryService.getList();
+		ArrayList<CategoryVO> subCategoryList = subCategoryService.getList();
+
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("subCategoryList", subCategoryList);
 		model.addAttribute("content", GlobalValues.postCreate);
 		return "frame";
 	}
@@ -94,12 +101,14 @@ public class PostController {
 	@Auth(type = Type.ADMIN)
 	@GetMapping("{postId}/edit")
 	public String edit(@PathVariable("postId") String _postId, Model model) throws Exception {
-		postService.deleteImgFile(0);
-
 		PostVO postVO = new PostVO();
 		postVO.setPostId(Integer.parseInt(_postId));
 		postVO = postService.getPost(postVO);
+		ArrayList<CategoryVO> categoryList = categoryService.getList();
+		ArrayList<CategoryVO> subCategoryList = subCategoryService.getList();
 
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("subCategoryList", subCategoryList);
 		model.addAttribute("currentPost", postVO);
 		model.addAttribute("content", GlobalValues.postModify);
 
@@ -128,6 +137,9 @@ public class PostController {
 				postService.uploadImg(postId, "thumbnail", fileName, thumbnail);
 				postVO.setThumbnail(fileName);
 			}
+		}
+		else {
+			postVO.setThumbnail("");
 		}
 
 		int categoryId = Integer.parseInt(_categoryId);

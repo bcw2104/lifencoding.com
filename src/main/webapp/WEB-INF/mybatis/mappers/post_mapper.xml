@@ -4,18 +4,9 @@
 
 <mapper namespace="com.lifencoding.mapper.PostMapper">
 
-	<select id="getRecentId" resultType="int" parameterType="postVO">
-		SELECT max(post_id) FROM post_tbl
-			<where>
-				<if test="postTitle != null">AND post_title LIKE '%${postTitle}%'</if>
-				<if test="categoryId != 0">AND category_id = #{categoryId}</if>
-			</where>
-	</select>
-
 	<select  id="getSequenceNum" resultType="int" >
 		SELECT IFNULL(max(post_id)+1,1) from post_tbl
 	</select>
-
 
 	<select id="select" resultType="postVO" parameterType="hashmap">
 		SELECT * FROM post_tbl NATURAL JOIN subcategory_tbl

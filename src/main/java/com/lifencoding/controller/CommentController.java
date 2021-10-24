@@ -50,7 +50,7 @@ public class CommentController {
 		CommentVO commentVO = new CommentVO();
 
 		if(session.getAttribute("admin") != null) {
-			AdminVO adminVO = adminService.getAdminInfo();
+			AdminVO adminVO = adminService.getAdminAllData();
 			commentVO.setCommentNickname(adminVO.getAdminNickname());
 			commentVO.setCommentPw(adminVO.getAdminPw());
 			commentVO.setSalt(adminVO.getSalt());

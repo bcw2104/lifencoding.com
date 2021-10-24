@@ -53,7 +53,7 @@
 	    </div>
 	</div>
 	<div id="post" class="my-5 bg-white">
-		<div id="postId" class="d-none">${requestScope.currentPost.postId}"</div>
+		<div id="postId" class="d-none">${requestScope.currentPost.postId}</div>
 	    <div class="shadow p-sm-5 py-5 px-3">
 	    <c:choose>
 			<c:when test="${requestScope.currentPost != null}">
@@ -94,7 +94,7 @@
 	            </c:if>
 
 	            <div class="comment m-sm-5">
-	            	<div>댓글 <span id="commentCount" class="text-danger">15</span></div>
+	            	<div>댓글 <span id="commentCount" class="text-danger"></span></div>
 	            	<hr/>
 					<div id="commentContainer"></div>
 	            </div>

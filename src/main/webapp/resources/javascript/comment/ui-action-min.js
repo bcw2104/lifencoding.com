@@ -1,13 +1,13 @@
 function getCommentList() {
-	if($("#postId").val() != ''){
+	if($("#postId").text() != ''){
 		$.ajax({
-			url: "/comment/get.do?postId="+$("#postId").val(),
+			url: "/comment/get.do?postId="+$("#postId").text(),
 			type:"get",
 			success: function(data){
 				data = JSON.parse(data);
 				$("#commentCount").text(data.length);
 				for(i in data){
-					$("#commentContainer").append(commentForm(data[i].id,data[i].nickname,data[i].content,data[i].date,data[i].parentId,data[i].isAdmin));
+					$("#commentContainer").append(commentForm(data[i].id,data[i].nickname,data[i].content,data[i].date,data[i].parentId));
 				}
 			}
 		});
@@ -127,7 +127,7 @@ function commentWriteForm(e,reply){
 
 			var form = "<div " +formType+ " class='comment-write-box mt-3 px-2 py-3'>"
 				+"<form>"
-					+"<input type='hidden' name='postId' value='"+$("#postId").val()+"'/>"
+					+"<input type='hidden' name='postId' value='"+$("#postId").text()+"'/>"
 					+ parent + info
 					+"<div class='form-group'>"
 						+"<textarea class='form-control'  name='content' rows='5' placeholder='내용을 입력해주세요.'></textarea>"
@@ -142,8 +142,9 @@ function commentWriteForm(e,reply){
 		}
 	});
 }
-function commentForm(commentId,commentNickname,commentContent,commentDate,parentId,isAdmin){
+function commentForm(commentId,commentNickname,commentContent,commentDate,parentId){
 	var commentMenu="";
+	var reply = "";
 	var link = $("#cdnLink").val();
 
 	if(commentContent != ""){
@@ -152,6 +153,7 @@ function commentForm(commentId,commentNickname,commentContent,commentDate,parent
 							+"<a class='dropdown-item' href='#none' onclick='createDeleteForm(this)'>삭제</a>"
 							+"<a class='dropdown-item' href='#'>신고</a>"
 						+"</div>";
+		reply = "<a class='font-15 text-secondary cursor-pointer' href='#none' onclick='createReplyForm(this)'>답글</a>";
 	}else{
 		commentContent = "삭제된 댓글입니다.";
 	}
@@ -173,7 +175,7 @@ function commentForm(commentId,commentNickname,commentContent,commentDate,parent
 	else{
 		form = "<div id="+commentId+" class='comment-box px-2 py-3'>"
 				+form
-				+"<a class='font-15 text-secondary cursor-pointer' href='#none' onclick='createReplyForm(this)'>답글</a>"
+				+reply
 				+"</div>";
 	}
 

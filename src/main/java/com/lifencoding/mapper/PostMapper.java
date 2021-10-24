@@ -11,8 +11,6 @@ public interface PostMapper {
 
 	public int getSequenceNum();
 
-	public int getRecentId(PostVO postVO);
-
 	public ArrayList<PostVO> select(PostVO postVO);
 
 	public ArrayList<PostVO> selectNear(PostVO postVO);
