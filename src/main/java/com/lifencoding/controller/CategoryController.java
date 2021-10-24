@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.lifencoding.annotation.Auth;
+import com.lifencoding.annotation.Auth.Type;
 import com.lifencoding.entity.CategoryVO;
 import com.lifencoding.serviceImpl.CategoryService;
 import com.lifencoding.serviceImpl.SubCategoryService;
 
 @Controller
+@Auth(type = Type.ADMIN)
 @RequestMapping("/category")
 public class CategoryController {
 

@@ -10,11 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.lifencoding.entity.CommentVO;
 import com.lifencoding.mapper.CommentMapper;
-import com.lifencoding.service.ContentServiceImpl;
 import com.lifencoding.util.SecureTool;
 
 @Service
-public class CommentService implements ContentServiceImpl<CommentVO>{
+public class CommentService{
 
 	@Autowired
 	private SecureTool secureTool;
@@ -55,12 +54,10 @@ public class CommentService implements ContentServiceImpl<CommentVO>{
 	}
 
 
-	@Override
 	public ArrayList<CommentVO> getList(CommentVO commentVO) {
 		return commentMapper.select(commentVO);
 	}
 
-	@Override
 	public CommentVO get(CommentVO commentVO) {
 		ArrayList<CommentVO> list = commentMapper.select(commentVO);
 
@@ -72,7 +69,6 @@ public class CommentService implements ContentServiceImpl<CommentVO>{
 		}
 	}
 
-	@Override
 	public void add(CommentVO commentVO) throws Exception {
 		String salt = secureTool.createSalt();
 
@@ -84,12 +80,8 @@ public class CommentService implements ContentServiceImpl<CommentVO>{
 		commentMapper.insert(commentVO);
 	}
 
-	@Override
 	public void delete(CommentVO commentVO) {
 		commentMapper.delete(commentVO);
 	}
-
-	@Override
-	public void modify(CommentVO commentVO) { }
 
 }

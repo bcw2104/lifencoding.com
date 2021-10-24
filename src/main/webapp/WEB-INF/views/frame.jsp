@@ -47,14 +47,7 @@
     </header>
 
 	<div>
-    	<c:choose>
-    		<c:when test="${requestScope.content != null}">
-    			<jsp:include page="${requestScope.content}"></jsp:include>
-    		</c:when>
-    		<c:otherwise>
-    			<jsp:include page="/WEB-INF/views/home/home.jsp"></jsp:include>
-    		</c:otherwise>
-    	</c:choose>
+		<jsp:include page="${requestScope.content}"></jsp:include>
     </div>
     <footer>
     	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

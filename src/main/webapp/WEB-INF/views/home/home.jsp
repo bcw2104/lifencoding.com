@@ -4,12 +4,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:set var="maxPage" value="${requestScope.postCount%5 > 0 ? requestScope.postCount/5+1 : requestScope.postCount/5}" ></c:set>
-<c:set var="curPage" value="${(param.p == null or param.p <1 or param.p >maxPage) ? 1 : param.p}" />
-<c:set var="now" value="<%=new java.util.Date()%>" />
-
 <link rel="stylesheet" href="/resources/css/home/style-min.css">
+<script type="text/javascript" src="/resources/javascript/pagination/pagination.js"></script>
+<script src="/resources/javascript/home/ui-action-min.js"></script>
 
+<div class="cdn-link d-none"><%= GlobalValues.link %></div>
 <div class="container-fluid p-0 head-font">
 	<div class="banner position-relative bg-dark">
 		<h1 class="banner-title position-absolute text-white font-28">일상과 배움을 기록하는 공간</h1>
@@ -18,7 +17,7 @@
 
 <div class="container my-5">
 	<jsp:include page="/WEB-INF/views/category/view.jsp"></jsp:include>
-	<div class="shadow p-sm-5 p-0 row m-0">
+	<div class="bg-white shadow p-sm-5 p-0 row m-0">
 		<div class="col-lg-4 mb-3 p-0">
 			<div class="row m-0">
 				<div class="col-sm-4 col-lg-12 ">
@@ -58,74 +57,12 @@
 		<div class="col-lg-7 p-2">
 			<div class="content-hot">
 		    	<div class="mb-2 bg-dark text-white p-2 head-font font-20">인기 글</div>
-				<c:forEach items="${requestScope.hotPostList}" var="n">
-				<div class="post-item my-4 d-flex pl-2">
-					<div class="p-0 flex-fill d-flex flex-column justify-content-between">
-						<div>
-							<a class="text-dark font-17" href="/${n.categoryEn}/${n.postId}#post">${n.postTitle}</a>
-							<div class="mt-3 font-13 post-content">${n.postContent}</div>
-						</div>
-						<div class="mt-3 font-12">
-							<span><a class="text-primary" href="/${n.categoryEn}">${n.categoryName}</a></span>
-							<span class="mx-2 text-secondary">|</span>
-							<span class="text-secondary">
-							<fmt:formatDate value="${n.postDate}" var="postDate" pattern="yyyy-MM-dd" />
-	                   		<c:choose>
-	                   			<c:when test="${postDate == today}">
-									<fmt:formatDate value="${n.postDate}" pattern="HH:mm"/>
-	                   			</c:when>
-	                   			<c:otherwise>
-	                   				<fmt:formatDate value="${n.postDate}" pattern="yyyy-MM-dd"/>
-	                   			</c:otherwise>
-	                   		</c:choose>
-	                   		</span>
-						</div>
-					</div>
-					<c:if test="${n.thumbnail != null}">
-		        	<img alt="thumbnail" class="thumbnail ml-3" src="<%= GlobalValues.link %>/resources/upload/files/post/${n.postId}/thumbnail/${n.thumbnail}">
-		        	</c:if>
-				</div>
-				<hr/>
-				</c:forEach>
+				<div class="content-hot-list"></div>
 		    </div>
 			<div class="content-recent mt-5">
 				<div id="recent" class="mb-2 bg-dark text-white p-2 head-font font-20">최신 글</div>
-				<c:forEach items="${requestScope.postList}" var="n">
-				<div class="post-item my-4 d-flex pl-2">
-					<div class="p-0 flex-fill d-flex flex-column justify-content-between">
-						<div>
-							<a class="text-dark font-17" href="/${n.categoryEn}/${n.postId}#post">${n.postTitle}</a>
-							<div class="mt-3 font-13 post-content">${n.postContent}</div>
-						</div>
-						<div class="mt-3 font-12">
-							<span><a class="text-primary" href="/${n.categoryEn}">${n.categoryName}</a></span>
-							<span class="mx-2 text-secondary">|</span>
-							<span class="text-secondary">
-							<fmt:formatDate value="${n.postDate}" var="postDate" pattern="yyyy-MM-dd" />
-	                   		<c:choose>
-	                   			<c:when test="${postDate == today}">
-									<fmt:formatDate value="${n.postDate}" pattern="HH:mm"/>
-	                   			</c:when>
-	                   			<c:otherwise>
-	                   				<fmt:formatDate value="${n.postDate}" pattern="yyyy-MM-dd"/>
-	                   			</c:otherwise>
-	                   		</c:choose>
-	                   		</span>
-						</div>
-					</div>
-					<c:if test="${n.thumbnail != null}">
-		        	<img alt="thumbnail" class="thumbnail ml-3" src="<%= GlobalValues.link %>/resources/upload/files/post/${n.postId}/thumbnail/${n.thumbnail}">
-		        	</c:if>
-				</div>
-				<hr/>
-				</c:forEach>
-				<ul class="pager row list-unstyled justify-content-center mt-3">
-			        <li class="pager-item ${curPage-1 < 1 ? 'd-none' : ''}"><a class="text-dark" href="?p=${curPage-1}#recent">이전</a></li>
-			        <c:forEach begin="1" end="${maxPage}" varStatus="n">
-			        	<li class="pager-item ${curPage == n.index ? 'pager-item-active' : ''}"><a class="text-dark p-2" href="?p=${n.index}#recent">${n.index}</a></li>
-			        </c:forEach>
-			        <li class="pager-item ${curPage+1 > maxPage ? 'd-none' : ''}"><a class="text-dark" href="?p=${curPage+1}#recent">다음</a></li>
-			    </ul>
+				<div class="content-recent-list"></div>
+				<div class="pagination" class="mt-4"> </div>
 		    </div>
 	    </div>
 	</div>

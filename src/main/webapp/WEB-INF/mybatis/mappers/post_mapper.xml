@@ -4,8 +4,8 @@
 
 <mapper namespace="com.lifencoding.mapper.PostMapper">
 
-	<select id="getCount" resultType="int" parameterType="postVO">
-		SELECT count(post_id) FROM post_tbl
+	<select id="getRecentId" resultType="int" parameterType="postVO">
+		SELECT max(post_id) FROM post_tbl
 			<where>
 				<if test="postTitle != null">AND post_title LIKE '%${postTitle}%'</if>
 				<if test="categoryId != 0">AND category_id = #{categoryId}</if>
@@ -17,30 +17,14 @@
 	</select>
 
 
-	<select id="select" resultType="postVO" parameterType="postVO">
-	<choose>
-		<when test="start != 0">
-			SELECT * FROM
-				(SELECT @rownum:=@rownum+1 AS rnum,tmp1.*
-				FROM (SELECT * FROM post_tbl
-					<where>
-						<if test="postId != 0">post_id = #{postId}</if>
-						<if test="postTitle != null">AND post_title LIKE '%${postTitle}%'</if>
-						<if test="categoryId != 0">AND category_id = #{categoryId}</if>
-					</where>
-					) tmp1,(SELECT @rownum:=0) tmp2 ORDER BY post_date desc) result_tbl NATURAL JOIN subcategory_tbl
-		 	WHERE rnum &gt;= #{start} AND rnum &lt;= #{end} ORDER BY rnum
-		</when>
-		<otherwise>
-			SELECT * FROM post_tbl NATURAL JOIN subcategory_tbl
-			<where>
-				<if test="postId != 0">post_id = #{postId}</if>
-				<if test="postTitle != null">AND post_title LIKE '%${postTitle}%'</if>
-				<if test="categoryId != 0">AND category_id = #{categoryId}</if>
-			</where>
-			ORDER BY post_date desc
-		</otherwise>
-	</choose>
+	<select id="select" resultType="postVO" parameterType="hashmap">
+		SELECT * FROM post_tbl NATURAL JOIN subcategory_tbl
+		<where>
+			<if test="postId != 0">post_id = #{postId}</if>
+			<if test="postTitle != null">AND post_title LIKE '%${postTitle}%'</if>
+			<if test="categoryId != 0">AND category_id = #{categoryId}</if>
+		</where>
+		ORDER BY post_id desc
 	</select>
 
 	<select id="selectNear" resultType="postVO" parameterType="postVO">
@@ -60,8 +44,8 @@
  		ORDER BY post_date ASC
 	</select>
 
-	<select id="selectHot" resultType="postVO">
-		SELECT * from post_tbl NATURAL JOIN subcategory_tbl ORDER BY hits DESC LIMIT 5
+	<select id="selectHot" resultType="postVO" parameterType="int">
+		SELECT * from post_tbl NATURAL JOIN subcategory_tbl ORDER BY hits DESC LIMIT #{cnt}
 	</select>
 
 	<insert id="insert" parameterType="postVO">
@@ -81,14 +65,14 @@
 		</where>
 	</update>
 
-	<update id="addHits" parameterType="int">
+	<update id="increaseHits" parameterType="int">
 		UPDATE post_tbl SET hits = hits+1
 		<where>
 			post_id = #{postId}
 		</where>
 	</update>
 
-	<delete id="delete" parameterType="postVO">
+	<delete id="delete" parameterType="int">
 		DELETE FROM post_tbl
 		<where>
 			post_id = #{postId}

@@ -11,8 +11,6 @@ public class PostVO {
 	private int categoryId;
 	private String categoryEn;
 	private String categoryName;
-	private int start;
-	private int end;
 	private String thumbnail;
 	private int hits;
 
@@ -25,8 +23,6 @@ public class PostVO {
 		categoryId = 0;
 		categoryEn = null;
 		categoryName = null;
-		start = 0;
-		end = 0;
 		thumbnail = null;
 		hits = 0;
 	}
@@ -82,22 +78,6 @@ public class PostVO {
 
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
-	}
-
-	public int getStart() {
-		return start;
-	}
-
-	public void setStart(int start) {
-		this.start = start;
-	}
-
-	public int getEnd() {
-		return end;
-	}
-
-	public void setEnd(int end) {
-		this.end = end;
 	}
 
 	public String getThumbnail() {

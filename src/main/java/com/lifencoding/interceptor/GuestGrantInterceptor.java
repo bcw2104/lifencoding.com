@@ -1,42 +1,32 @@
 package com.lifencoding.interceptor;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.lifencoding.entity.GuestVO;
 import com.lifencoding.serviceImpl.GuestService;
-import com.lifencoding.util.RequestHeaderTools;
+import com.lifencoding.util.RequestHeaderTool;
 
 public class GuestGrantInterceptor implements HandlerInterceptor{
 
 	@Autowired
 	public GuestService guestService;
 	@Autowired
-	public RequestHeaderTools requestHeaderTools;
+	public RequestHeaderTool requestHeaderTools;
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		HttpSession session = request.getSession();
 
 		Cookie guestCookie = null;
 		boolean recordIp = false;
-
-		if(session.getAttribute("guest") == null && session.getAttribute("admin") == null) {
-			ArrayList<Integer> visitList = new ArrayList<Integer>();
-			session.setAttribute("guest", true);
-			session.setAttribute("visit",visitList);
-			session.setMaxInactiveInterval(600);
-		}
 
 		Cookie[] cookies = request.getCookies();
 		if(cookies != null) {

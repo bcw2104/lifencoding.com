@@ -32,16 +32,7 @@
 		</interceptor>
 
 		<interceptor>
-			<mapping path="/admin/info"/>
-			<mapping path="/admin/check.do"/>
-			<mapping path="/admin/logout.do"/>
-			<mapping path="/admin/info.do"/>
-			<mapping path="/admin/modify.do"/>
-			<mapping path="/admin/code.do"/>
-			<mapping path="/admin/confirm.do"/>
-			<mapping path="/admin/changeImg.do"/>
-			<mapping path="/category/**"/>
-			<mapping path="/post/**"/>
+			<mapping path="/**"/>
 			<beans:ref bean="authCheckInterceptor"/>
 		</interceptor>
 

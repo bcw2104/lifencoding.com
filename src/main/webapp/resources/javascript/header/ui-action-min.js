@@ -1,4 +1,3 @@
-
 function search(){
 	window.location.href="/?search="+$("#search").val();
 }

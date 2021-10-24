@@ -10,39 +10,24 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.lifencoding.entity.PostVO;
 import com.lifencoding.mapper.PostMapper;
-import com.lifencoding.service.ContentServiceImpl;
 import com.lifencoding.util.FTPManager;
 import com.lifencoding.util.FileTool;
 
 @Service
-public class PostService implements ContentServiceImpl<PostVO>{
+public class PostService{
 
 	@Autowired
 	private FTPManager manager;
 	@Autowired
 	private PostMapper postMapper;
 
-	public int[] getPageRange(String p,int count,int size) {
-		int [] range = new int[2];
-
-		if (p != null) {
-			try {
-				range[0] = (Integer.parseInt(p)-1)*(size+1)+1;
+	public boolean isFirstVisit(ArrayList<Integer> visitList,int postId) {
+		for(int visit : visitList) {
+			if(visit == postId) {
+				return false;
 			}
-			catch(NumberFormatException e) {
-				range[0] = 1;
-			}
-
-			if(range[0] < 1 || range[0] > count)
-				range[0] = 1;
-			range[1] = range[0]+size;
 		}
-		else {
-			range[0]=1;
-			range[1] = range[0]+size;
-		}
-
-		return range;
+		return true;
 	}
 
 	public String makePostThumbnail(String postContent,int len){
@@ -55,30 +40,25 @@ public class PostService implements ContentServiceImpl<PostVO>{
 		return str;
 	}
 
-	public ArrayList<PostVO> makeAllPostThumbnail(ArrayList<PostVO> list,int len){
+	public void makeAllPostThumbnail(ArrayList<PostVO> list,int len){
 		for(PostVO ele : list) {
 			ele.setPostContent(makePostThumbnail(ele.getPostContent(),len));
 		}
-
-		return list;
 	}
 
-	public int getPostCount(PostVO postVO) {
-		return postMapper.getCount(postVO);
+	public int getRecentId(PostVO postVO) {
+		return postMapper.getRecentId(postVO);
 	}
 
 	public int getNextPostId() {
 		return postMapper.getSequenceNum();
 	}
 
-	@Override
-	public ArrayList<PostVO> getList(PostVO postVO) {
+	public ArrayList<PostVO> getPostList(PostVO postVO) {
 		return postMapper.select(postVO);
 	}
 
-
-	@Override
-	public PostVO get(PostVO postVO) {
+	public PostVO getPost(PostVO postVO) {
 		ArrayList<PostVO> list = postMapper.select(postVO);
 
 		if(list.isEmpty()) {
@@ -89,32 +69,29 @@ public class PostService implements ContentServiceImpl<PostVO>{
 		}
 	}
 
-	public ArrayList<PostVO> getNear(PostVO postVO) {
+	public ArrayList<PostVO> getNearPost(PostVO postVO) {
 		return postMapper.selectNear(postVO);
 	}
 
-	public ArrayList<PostVO> getHotList() {
-		return postMapper.selectHot();
+	public ArrayList<PostVO> getHotPostList(int cnt) {
+		return postMapper.selectHot(cnt);
 	}
 
-	public void addHits(int postId) {
-		postMapper.addHits(postId);
+	public void increaseHits(int postId) {
+		postMapper.increaseHits(postId);
 	}
 
-	@Override
 	public void add(PostVO postVO) {
 		postMapper.insert(postVO);
 	}
 
-	@Override
 	public void modify(PostVO postVO) {
 		postMapper.modify(postVO);
 
 	}
 
-	@Override
-	public void delete(PostVO postVO) {
-		postMapper.delete(postVO);
+	public void delete(int postId) {
+		postMapper.delete(postId);
 	}
 
 	public String uploadImg(int postId,String type,String fileName,MultipartFile mfile) throws Exception {

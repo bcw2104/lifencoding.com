@@ -55,5 +55,5 @@
 	<bean class="com.lifencoding.util.SecureTool" />
 	<bean class="com.lifencoding.util.MailTool" />
 	<bean class="com.lifencoding.util.FTPManager" />
-	<bean class="com.lifencoding.util.RequestHeaderTools" />
+	<bean class="com.lifencoding.util.RequestHeaderTool" />
 </beans>
