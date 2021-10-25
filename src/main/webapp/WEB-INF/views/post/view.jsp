@@ -115,7 +115,7 @@
 	                        	</c:choose>
 	                        </td>
 	                        <td class="text-left">
-	                        	<a class="text-dark d-block w-100" href="/${n.categoryEn}/${n.postId}?p=${curPage}#post">${n.postTitle}</a>
+	                        	<a class="text-dark d-block w-100" href="/${n.categoryEn}/${n.postId}#post">${n.postTitle}</a>
 	                        </td>
 	                         <td class="text-right" style="width:100px">
 	                        	<span class="text-secondary">
